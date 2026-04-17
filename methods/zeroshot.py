@@ -122,7 +122,7 @@ class ZeroShotMethod(BaseMethod):
             
             return predictions
         else:
-            if 'no segments' or 'any segments' in response:
+            if 'no segments' in response or 'any segments' in response:
                 return []
             
             # parse from rationale
