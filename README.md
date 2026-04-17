@@ -112,6 +112,6 @@ If you find our work helpful, please cite our work as follows:
     author={Younghan Park and Anuj Diwan and David Harwath and Eunsol Choi},
     year={2025},
     booktitle={Conference on Language Modeling (COLM) 2025},
-    url={https://arxiv.org/abs/2503.04713},
+    url={https://arxiv.org/abs/2505.19429},
 }
 ```
