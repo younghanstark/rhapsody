@@ -49,12 +49,59 @@ python evaluate.py [evaluation options] <method> [method options]
 | `frequency` | Frequency-based baseline. Predicts the most frequently highlighted segments from the train split. |
 | `bm25` | BM25-based detection. Ranks segments by BM25 similarity to the podcast title. |
 | `zeroshot` | Zero-shot prompting with LLMs (GPT-4o, Gemini). |
+| `ft_llm` | Fine-tuned LLM with QLoRA (Llama-3.2-1B-Instruct) and segment-level classification. |
 
 See each method's `add_cli_args` class method for a list of its specific command-line options.
 
-**Important Note**: The code for `fine-tuned LLMs with segment-level classification heads` will be available soon :)
-
 Note: The `--use_audio` option for the `zeroshot` method tries to provide the original podcast audio from YouTube, but may not work in all examples, as some podcast episodes may be unavailable, hidden, or removed from YouTube.
+
+### Fine-tuned LLMs with Segment-Level Classification Heads (`ft_llm`)
+
+#### Additional Setup
+
+```bash
+pip install unsloth torch peft transformers pyyaml
+```
+
+Requires a CUDA-capable GPU for 4-bit QLoRA training and inference.
+
+#### Training
+
+```bash
+# text-only
+python ft_llm/train.py --config ft_llm/configs/text_only.yaml --save_dir checkpoints/text_only
+
+# text + DVA
+python ft_llm/train.py --config ft_llm/configs/text_dva.yaml --save_dir checkpoints/text_dva
+
+# text + HuBERT
+python ft_llm/train.py --config ft_llm/configs/text_hubert.yaml --save_dir checkpoints/text_hubert
+```
+
+#### Resume Training
+
+```bash
+python ft_llm/train.py --config ft_llm/configs/text_only.yaml --save_dir checkpoints/text_only --resume checkpoints/text_only
+```
+
+#### Evaluation
+
+```bash
+# text-only
+python evaluate.py ft_llm --checkpoint_path checkpoints/text_only
+
+# with audio features
+python evaluate.py ft_llm --checkpoint_path checkpoints/text_dva --use_dva
+python evaluate.py ft_llm --checkpoint_path checkpoints/text_hubert --use_hubert
+```
+
+#### Trainable Parameters
+
+| Setting | LoRA | Classifier | Audio Proj | Total |
+|---------|------|-----------|------------|-------|
+| text-only | ~5.6M | 2,049 | — | ~5.6M |
+| text+DVA | ~5.6M | 3,073 | 1,049,600 | ~6.7M |
+| text+HuBERT | ~5.6M | 2,817 | 590,592 | ~6.2M |
 
 ## 3. Citation
 

@@ -1,0 +1,16 @@
+model_name: meta-llama/Llama-3.2-1B-Instruct
+max_seq_length: 8192
+seg_end_token: "<|reserved_special_token_0|>"
+use_dva: false
+use_hubert: false
+hubert_layer: 9
+lora_r: 8
+lora_alpha: 16
+lora_dropout: 0.3
+lr: 0.0003
+weight_decay: 0.01
+epochs: 10
+grad_accum_steps: 8
+max_n_gt: 20
+gt_threshold: 0.5
+threshold: 0.3

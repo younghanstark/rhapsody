@@ -5,12 +5,14 @@ from methods.base import BaseMethod
 from methods.heuristics import RandomMethod, FrequencyMethod
 from methods.bm25 import BM25Method
 from methods.zeroshot import ZeroShotMethod
+from methods.ft_llm import FtLlmMethod
 
 METHOD_REGISTRY = {
     "random": RandomMethod,
     "frequency": FrequencyMethod,
     "bm25": BM25Method,
     "zeroshot": ZeroShotMethod,
+    "ft_llm": FtLlmMethod,
 }
 
 def list_methods() -> list[str]:
