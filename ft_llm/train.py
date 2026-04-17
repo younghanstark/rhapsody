@@ -80,7 +80,6 @@ def main():
     parser.add_argument('--config', type=str, required=True, help='path to YAML config')
     parser.add_argument('--save_dir', type=str, required=True, help='checkpoint output directory')
     parser.add_argument('--resume', type=str, default=None, help='path to checkpoint dir to resume from')
-    parser.add_argument('--dev', action='store_true', help='use dev dataset')
     args = parser.parse_args()
 
     # load config
@@ -98,7 +97,7 @@ def main():
     # load dataset
     from unsloth import FastLanguageModel
 
-    dataset = load_dataset("yhpark/rhapsody-dev" if args.dev else "yhpark/rhapsody")
+    dataset = load_dataset("yhpark/rhapsody")
     dataset.set_format("numpy")
     train_dataset = dataset['train']
     val_dataset = dataset['val']

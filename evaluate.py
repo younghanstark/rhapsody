@@ -20,7 +20,7 @@ def gather_results(results):
 
 def main(args):
     # prepare dataset
-    dataset = load_dataset("yhpark/rhapsody-dev" if args.dev else "yhpark/rhapsody")
+    dataset = load_dataset("yhpark/rhapsody")
     dataset.set_format("numpy")
     test_dataset = dataset['test']
     
@@ -80,13 +80,6 @@ if __name__ == "__main__":
         help="include test examples with 0 ground truth highlights. By default, such examples are skipped."
     )
 
-    # temporary 
-    parser.add_argument(
-        "--dev",
-        action="store_true",
-        help="evaluate on the dev set",
-    )
-    
     # add method-specific arguments
     subparsers = parser.add_subparsers(dest="method", help="method to evaluate", required=True)
     for method_name in list_methods():
